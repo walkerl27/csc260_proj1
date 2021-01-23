@@ -1,5 +1,8 @@
 package edu.union.adt.graph;
 
+import java.util.HaspMap;
+import java.util.HashSet;
+
 /**
  * A graph that establishes connections (edges) between objects of
  * (parameterized) type V (vertices).  The edges are directed.  An
@@ -14,18 +17,25 @@ package edu.union.adt.graph;
  * vertices.
  *
  * @author Aaron G. Cass
- * @version 1
+ * @version 1.0
  *
  * Student: Logan Walker
+ *
+ * I affirm that I have carried out the attached academic endeavors with full academic honesty,
+ * in accordance with the Union College Honor Code and the course syllabus.
  *
  */
 public class Graph<V>
 {
+
+    private HashMap<V, HashSet<V>> info;
+  
     /**
      * Create an empty graph.
      */
-    public Graph() 
+    public Graph()
     {
+      info = new HashMap<V, HashSet<V>>();
     }
 
     /**

@@ -15,6 +15,9 @@ package edu.union.adt.graph;
  *
  * @author Aaron G. Cass
  * @version 1
+ *
+ * Student: Logan Walker
+ *
  */
 public class Graph<V>
 {

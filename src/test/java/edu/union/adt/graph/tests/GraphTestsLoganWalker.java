@@ -51,4 +51,29 @@ public class GraphTestsLoganWalker {
         assertTrue("the destination vertex will also be contained in " +
                 "the graph", test.contains(num2));
     }
+
+    @Test
+    public void selfEdge() {
+        Integer num1 = 420;
+
+        test.addEdge(num1, num1);
+        assertTrue("adding a self-looping edge adds the vertex " +
+                "to the graph", test.contains(num1));
+        assertTrue("self-looping edges are added to the graph",
+                test.hasEdge(num1, num1));
+        assertEquals("adding a new vertex with a self-looping " +
+                "edge adds only one vertex and one edge", test.numEdges(), test.numVertices());
+    }
+
+    @Test
+    public void addingIdenticalVertex() {
+        Integer num = 420;
+        test.addVertex(num);
+        test.addEdge(num, num);
+        assertEquals("adding an edge to an existing vertex should not create another vertex",
+                test.numVertices(), 1);
+        test.addEdge(420, 420);
+        assertEquals("adding an edge to an existing vertex should not create another vertex" +
+                "even if the element type is different", test.numVertices(), 1);
+    }
 }

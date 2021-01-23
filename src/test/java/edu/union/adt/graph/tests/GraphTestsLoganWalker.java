@@ -21,4 +21,34 @@ public class GraphTestsLoganWalker {
 
     private Graph<Integer> test;
 
-  }
+    @Before
+    public void setUp()
+    {
+        test = new Graph<Integer>();
+    }
+
+    @Test
+    public void containsVertex() {
+        Integer num = 420;
+        assertFalse("an empty graph will return false", test.contains(num));
+
+        test.addVertex(num);
+        assertTrue("contains will return true should the desired " +
+            "vertex exist in the graph", test.contains(num));
+        assertTrue("contains will return true should the desired " +
+            "vertex exist in the graph, even if it's in a wrapper class" +
+            "such as int vs. Integer", test.contains(420));
+    }
+
+    @Test
+    public void containsEdges() {
+        Integer num1 = 420;
+        Integer num2 = 421;
+
+        test.addEdge(num1, num2);
+        assertTrue("the source vertex will be contained in " +
+                "the graph", test.contains(num1));
+        assertTrue("the destination vertex will also be contained in " +
+                "the graph", test.contains(num2));
+    }
+}

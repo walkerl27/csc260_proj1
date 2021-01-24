@@ -2,6 +2,7 @@ package edu.union.adt.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A graph that establishes connections (edges) between objects of
@@ -51,7 +52,12 @@ public class Graph<V>
      */
     public int numEdges()
     {
-        return 0;
+      Set<V> keys = info.keySet();
+      int count = 0;
+      for(V vertex: keys){
+          count += degree(vertex);
+      }
+      return count;
     }
 
     /**
@@ -64,7 +70,13 @@ public class Graph<V>
      */
     public int degree(V vertex)
     {
-        return 0;
+        Set<V> vertices = info.keySet();
+        if (!vertices.contains(vertex)) {
+          throw new RuntimeException("vertex not in graph");
+        }
+
+        HashSet<V> value = info.get(vertex);
+        return value.size();
     }
 
     /**
@@ -78,11 +90,11 @@ public class Graph<V>
      */
     public void addEdge(V from, V to)
     {
-      if (!this.contains(from)) {
-            addVertex(from);
+        if (!this.contains(from)) {
+              addVertex(from);
         }
         if (!this.contains(to)) {
-            addVertex(to);
+              addVertex(to);
         }
         HashSet<V> values = info.get(from);
         values.add(to);
@@ -97,8 +109,8 @@ public class Graph<V>
      */
     public void addVertex(V vertex)
     {
-      if (!info.containsKey(vertex)) {
-            info.put(vertex, new HashSet<V>());
+        if (!info.containsKey(vertex)) {
+              info.put(vertex, new HashSet<V>());
         }
     }
 
@@ -206,6 +218,10 @@ public class Graph<V>
       tester.put("A", temp);
       System.out.println(tester);
       System.out.println(tester.values());
-
+      HashSet<String> temp2 = new HashSet<String>();
+        temp2.add("b");
+        tester.put("A", temp2);
+        System.out.println(tester.values());
+        System.out.println(tester.values().size());
     }
 }

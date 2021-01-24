@@ -76,4 +76,45 @@ public class GraphTestsLoganWalker {
         assertEquals("adding an edge to an existing vertex should not create another vertex" +
                 "even if the element type is different", test.numVertices(), 1);
     }
+
+    @Test
+    public void stringForm() {
+        assertEquals("two empty graphs are equal in String form",
+                test.toString(), new Graph<Integer>().toString());
+
+        Integer num = 420;
+        test.addVertex(420);
+        assertNotEquals("a graph with a vertex is different from an empty graph",
+                test.toString(), new Graph<Integer>().toString());
+
+        Graph<Integer> test2 = new Graph<Integer>();
+        test2.addEdge(num, num);
+        assertNotEquals("a graph with a vertex is different from a graph with an edge",
+                test.toString(), test2.toString());
+    }
+
+    @Test
+    public void adjacentToComplexities() {
+        Integer num = 420;
+        Integer dirtyNum = 69;
+        System.out.println(test.adjacentTo(num));
+
+        assertEquals("If vertex not in graph, it has no destinations",
+                test.adjacentTo(num), new Graph<Integer>().adjacentTo(num));
+
+        test.addVertex(num);
+        assertEquals("adding a vertex does not give it a destination",
+                test.adjacentTo(num), new Graph<Integer>().adjacentTo(num));
+
+        test.addEdge(num, num);
+        assertNotEquals("adding an edge gives the graph a destination that it is 'adjacent' to",
+                test.adjacentTo(num), new Graph<Integer>().adjacentTo(num));
+
+        test.addEdge(num, dirtyNum);
+        assertEquals("being added as a destination does not give the vertex " +
+                "any 'adjacent' destinations for itself", test.adjacentTo(dirtyNum),
+                new Graph<Integer>().adjacentTo(dirtyNum));
+        assertNotEquals("a vertex with adjacent destinations is different from a vertex without" +
+                "'any adjacent destinations", test.adjacentTo(num), test.adjacentTo(dirtyNum));
+    }
 }

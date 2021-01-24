@@ -138,7 +138,12 @@ public class Graph<V>
      */
     public Iterable<V> adjacentTo(V from)
     {
-        return null;
+        if (info.containsKey(from)) {
+            return info.get(from);
+        }
+        else {
+            return new HashSet<V>();
+        }
     }
 
     /**
@@ -207,7 +212,57 @@ public class Graph<V>
      */
     public String toString()
     {
-        return "";
+      String toReturn = "";
+      Iterable<V> vertices = getVertices();
+      for(V vertex: vertices) {
+          toReturn += vertex.toString() + ":";
+          Iterable<V> values = adjacentTo(vertex);
+          for (V value: values) {
+              toReturn += " " + value.toString();
+          }
+          toReturn += "\n";
+      }
+      return toReturn;
+    }
+
+    /**
+     * Confirms whether or not two graphs share exactly
+     * the same vertices and corresponding edges.
+     *
+     * @param other the object to compare with
+     * @return true, if the graphs are equal. If not, false.
+     */
+     public boolean equals(Object other)
+     {
+        if (this == other) return true;
+        if (!(other instanceof Graph))
+            return false;
+        else {
+            if (this.numVertices() != ((Graph<V>) other).numVertices()) {
+                return false;
+            }
+            if (this.numVertices() != ((Graph<V>) other).numVertices()) {
+                return false;
+            }
+            if (this.numEdges() != ((Graph<V>) other).numEdges()) {
+                return false;
+            }
+            Iterable<V> otherVertices = ((Graph<V>) other).getVertices();
+            for (V vertex : otherVertices) {
+                if (!(this.contains(vertex))) {
+                    return false;
+                }
+
+                Iterable<V> thisValues = ((Graph<V>) this).adjacentTo(vertex);
+                Iterable<V> otherValues = ((Graph<V>) other).adjacentTo(vertex);
+                for (V value : otherValues) {
+                    if (!((HashSet<V>) thisValues).contains(value)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 
     // Logan's messy testing for Graph.java :P

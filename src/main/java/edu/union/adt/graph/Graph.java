@@ -1,6 +1,6 @@
 package edu.union.adt.graph;
 
-import java.util.HaspMap;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -29,7 +29,7 @@ public class Graph<V>
 {
 
     private HashMap<V, HashSet<V>> info;
-  
+
     /**
      * Create an empty graph.
      */
@@ -43,7 +43,7 @@ public class Graph<V>
      */
     public int numVertices()
     {
-        return 0;
+        return info.size();
     }
 
     /**
@@ -78,6 +78,14 @@ public class Graph<V>
      */
     public void addEdge(V from, V to)
     {
+      if (!this.contains(from)) {
+            addVertex(from);
+        }
+        if (!this.contains(to)) {
+            addVertex(to);
+        }
+        HashSet<V> values = info.get(from);
+        values.add(to);
     }
 
     /**
@@ -89,6 +97,9 @@ public class Graph<V>
      */
     public void addVertex(V vertex)
     {
+      if (!info.containsKey(vertex)) {
+            info.put(vertex, new HashSet<V>());
+        }
     }
 
     /**
@@ -97,7 +108,7 @@ public class Graph<V>
      */
     public Iterable<V> getVertices()
     {
-        return null;
+        return info.keySet();
     }
 
     /**
@@ -126,7 +137,7 @@ public class Graph<V>
      */
     public boolean contains(V vertex)
     {
-        return false;
+        return info.containsKey(vertex);
     }
 
     /**
@@ -142,7 +153,14 @@ public class Graph<V>
      */
     public boolean hasEdge(V from, V to)
     {
-        return false;
+        if (!this.contains(from)) {
+            return false;
+        }
+        if (!this.contains(to)) {
+            return false;
+        }
+        HashSet<V> values = info.get(from);
+        return values.contains(to);
     }
 
     /**
@@ -178,5 +196,16 @@ public class Graph<V>
     public String toString()
     {
         return "";
+    }
+
+    // Logan's messy testing for Graph.java :P
+    public static void main(String[] args) {
+      HashMap<String, HashSet<String>> tester = new HashMap<String, HashSet<String>>();
+      HashSet<String> temp = new HashSet<String>();
+      temp.add("a");
+      tester.put("A", temp);
+      System.out.println(tester);
+      System.out.println(tester.values());
+
     }
 }

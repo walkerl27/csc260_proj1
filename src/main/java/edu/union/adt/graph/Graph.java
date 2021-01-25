@@ -212,17 +212,17 @@ public class Graph<V>
      */
     public String toString()
     {
-      String toReturn = "";
-      Iterable<V> vertices = getVertices();
-      for(V vertex: vertices) {
-          toReturn += vertex.toString() + ":";
-          Iterable<V> values = adjacentTo(vertex);
-          for (V value: values) {
-              toReturn += " " + value.toString();
-          }
-          toReturn += "\n";
-      }
-      return toReturn;
+        String toReturn = "";
+        Iterable<V> vertices = getVertices();
+        for(V vertex: vertices) {
+            toReturn += vertex.toString() + ":";
+            Iterable<V> values = adjacentTo(vertex);
+            for (V value: values) {
+                toReturn += " " + value.toString();
+            }
+            toReturn += "\n";
+        }
+        return toReturn;
     }
 
     /**
@@ -232,36 +232,17 @@ public class Graph<V>
      * @param other the object to compare with
      * @return true, if the graphs are equal. If not, false.
      */
-     public boolean equals(Object other)
-     {
-        if (this == other) return true;
-        if (!(other instanceof Graph))
-            return false;
-        else {
-            if (this.numVertices() != ((Graph<V>) other).numVertices()) {
-                return false;
-            }
-            if (this.numVertices() != ((Graph<V>) other).numVertices()) {
-                return false;
-            }
-            if (this.numEdges() != ((Graph<V>) other).numEdges()) {
-                return false;
-            }
-            Iterable<V> otherVertices = ((Graph<V>) other).getVertices();
-            for (V vertex : otherVertices) {
-                if (!(this.contains(vertex))) {
-                    return false;
-                }
-
-                Iterable<V> thisValues = ((Graph<V>) this).adjacentTo(vertex);
-                Iterable<V> otherValues = ((Graph<V>) other).adjacentTo(vertex);
-                for (V value : otherValues) {
-                    if (!((HashSet<V>) thisValues).contains(value)) {
-                        return false;
-                    }
-                }
-            }
+    public boolean equals(Object other)
+    {
+        if (this == other) {
             return true;
+        }
+        if (!(other instanceof Graph)) {
+            return false;
+        }
+        else {
+            Graph<V> otherGraph = (Graph<V>) other;
+            return info.equals(otherGraph.info);
         }
     }
 

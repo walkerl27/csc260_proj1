@@ -24,9 +24,9 @@ public class GraphTestsUsingEquals
     @Before
     public void setUp()
     {
-        g = GraphFactory.createGraph();
-        g2 = GraphFactory.createGraph();
-        objectGraph = GraphFactory.createGraph();
+        g = GraphFactory.<String>createGraph();
+        g2 = GraphFactory.<String>createGraph();
+        objectGraph = GraphFactory.<Object>createGraph();
     }
 
     @Test

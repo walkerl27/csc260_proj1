@@ -23,7 +23,7 @@ public class SimpleGraphTests
     @Before
     public void setUp()
     {
-        g = GraphFactory.createGraph();
+        g = GraphFactory.<String>createGraph();
     }
 
     @After

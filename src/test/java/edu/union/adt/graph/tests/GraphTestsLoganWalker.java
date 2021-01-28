@@ -25,7 +25,7 @@ public class GraphTestsLoganWalker {
     @Before
     public void setUp()
     {
-        test = GraphFactory.createGraph();
+        test = GraphFactory.<Integer>createGraph();
     }
 
     @Test
@@ -81,14 +81,14 @@ public class GraphTestsLoganWalker {
     @Test
     public void stringForm() {
         assertEquals("two empty graphs are equal in String form",
-                test.toString(), GraphFactory.createGraph().toString());
+                test.toString(), GraphFactory.<Integer>createGraph().toString());
 
         Integer num = 420;
         test.addVertex(420);
         assertNotEquals("a graph with a vertex is different from an empty graph",
-                test.toString(), GraphFactory.createGraph().toString());
+                test.toString(), GraphFactory.<Integer>createGraph().toString());
 
-        Graph<Integer> test2 = GraphFactory.createGraph();
+        Graph<Integer> test2 = GraphFactory.<Integer>createGraph();
         test2.addEdge(num, num);
         assertNotEquals("a graph with a vertex is different from a graph with an edge",
                 test.toString(), test2.toString());
@@ -101,20 +101,20 @@ public class GraphTestsLoganWalker {
         System.out.println(test.adjacentTo(num));
 
         assertEquals("If vertex not in graph, it has no destinations",
-                test.adjacentTo(num), GraphFactory.createGraph().adjacentTo(num));
+                test.adjacentTo(num), GraphFactory.<Integer>createGraph().adjacentTo(num));
 
         test.addVertex(num);
         assertEquals("adding a vertex does not give it a destination",
-                test.adjacentTo(num), GraphFactory.createGraph().adjacentTo(num));
+                test.adjacentTo(num), GraphFactory.<Integer>createGraph().adjacentTo(num));
 
         test.addEdge(num, num);
         assertNotEquals("adding an edge gives the graph a destination that it is 'adjacent' to",
-                test.adjacentTo(num), GraphFactory.createGraph().adjacentTo(num));
+                test.adjacentTo(num), GraphFactory.<Integer>createGraph().adjacentTo(num));
 
         test.addEdge(num, dirtyNum);
         assertEquals("being added as a destination does not give the vertex " +
                 "any 'adjacent' destinations for itself", test.adjacentTo(dirtyNum),
-                GraphFactory.createGraph().adjacentTo(dirtyNum));
+                GraphFactory.<Integer>createGraph().adjacentTo(dirtyNum));
         assertNotEquals("a vertex with adjacent destinations is different from a vertex without" +
                 "'any adjacent destinations", test.adjacentTo(num), test.adjacentTo(dirtyNum));
     }

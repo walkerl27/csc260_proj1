@@ -18,7 +18,7 @@ import java.util.Set;
  * vertices.
  *
  * @author Aaron G. Cass
- * @version 1.0
+ * @version 1.1
  *
  * Student: Logan Walker
  *
@@ -26,7 +26,7 @@ import java.util.Set;
  * in accordance with the Union College Honor Code and the course syllabus.
  *
  */
-public class LoganGraph<V>
+public class LoganGraph<V> implements Graph<V>
 {
 
     private HashMap<V, HashSet<V>> info;

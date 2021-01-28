@@ -1,64 +1,16 @@
 package edu.union.adt.graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-/**
- * A graph that establishes connections (edges) between objects of
- * (parameterized) type V (vertices).  The edges are directed.  An
- * undirected edge between u and v can be simulated by two edges: (u,
- * v) and (v, u).
- *
- * The API is based on one from
- *     http://introcs.cs.princeton.edu/java/home/
- *
- * Some method names have been changed, and the Graph type is
- * parameterized with a vertex type V instead of assuming String
- * vertices.
- *
- * @author Aaron G. Cass
- * @version 1.0
- *
- * Student: Logan Walker
- *
- * I affirm that I have carried out the attached academic endeavors with full academic honesty,
- * in accordance with the Union College Honor Code and the course syllabus.
- *
- */
-public class Graph<V>
-{
-
-    private HashMap<V, HashSet<V>> info;
-
-    /**
-     * Create an empty graph.
-     */
-    public Graph()
-    {
-      info = new HashMap<V, HashSet<V>>();
-    }
+public interface Graph<V> {
 
     /**
      * @return the number of vertices in the graph.
      */
-    public int numVertices()
-    {
-        return info.size();
-    }
+    int numVertices();
 
     /**
      * @return the number of edges in the graph.
      */
-    public int numEdges()
-    {
-      Set<V> keys = info.keySet();
-      int count = 0;
-      for(V vertex: keys){
-          count += degree(vertex);
-      }
-      return count;
-    }
+    int numEdges();
 
     /**
      * Gets the number of vertices connected by edges from a given
@@ -68,16 +20,7 @@ public class Graph<V>
      * @param vertex the vertex whose degree we want.
      * @return the degree of vertex 'vertex'
      */
-    public int degree(V vertex)
-    {
-        Set<V> vertices = info.keySet();
-        if (!vertices.contains(vertex)) {
-          throw new RuntimeException("vertex not in graph");
-        }
-
-        HashSet<V> value = info.get(vertex);
-        return value.size();
-    }
+    int degree(V vertex);
 
     /**
      * Adds a directed edge between two vertices.  If there is already an edge
@@ -88,17 +31,7 @@ public class Graph<V>
      * @param from the source vertex for the added edge
      * @param to the destination vertex for the added edge
      */
-    public void addEdge(V from, V to)
-    {
-        if (!this.contains(from)) {
-              addVertex(from);
-        }
-        if (!this.contains(to)) {
-              addVertex(to);
-        }
-        HashSet<V> values = info.get(from);
-        values.add(to);
-    }
+    void addEdge(V from, V to);
 
     /**
      * Adds a vertex to the graph.  If the vertex already exists in
@@ -107,21 +40,13 @@ public class Graph<V>
      *
      * @param vertex the vertex to add
      */
-    public void addVertex(V vertex)
-    {
-        if (!info.containsKey(vertex)) {
-              info.put(vertex, new HashSet<V>());
-        }
-    }
+    void addVertex(V vertex);
 
     /**
      * @return the an iterable collection for the set of vertices of
      * the graph.
      */
-    public Iterable<V> getVertices()
-    {
-        return info.keySet();
-    }
+    Iterable<V> getVertices();
 
     /**
      * Gets the vertices adjacent to a given vertex.  A vertex y is
@@ -136,15 +61,7 @@ public class Graph<V>
      * vertex.  If 'from' is not a vertex in the graph, returns an
      * empty iterator.
      */
-    public Iterable<V> adjacentTo(V from)
-    {
-        if (info.containsKey(from)) {
-            return info.get(from);
-        }
-        else {
-            return new HashSet<V>();
-        }
-    }
+    Iterable<V> adjacentTo(V from);
 
     /**
      * Tells whether or not a vertex is in the graph.
@@ -152,10 +69,7 @@ public class Graph<V>
      * @param vertex a vertex
      * @return true iff 'vertex' is a vertex in the graph.
      */
-    public boolean contains(V vertex)
-    {
-        return info.containsKey(vertex);
-    }
+    boolean contains(V vertex);
 
     /**
      * Tells whether an edge exists in the graph.
@@ -168,17 +82,7 @@ public class Graph<V>
      * vertices are not vertices in the graph, then there is no edge
      * between them.
      */
-    public boolean hasEdge(V from, V to)
-    {
-        if (!this.contains(from)) {
-            return false;
-        }
-        if (!this.contains(to)) {
-            return false;
-        }
-        HashSet<V> values = info.get(from);
-        return values.contains(to);
-    }
+    boolean hasEdge(V from, V to);
 
     /**
      * Gives a string representation of the graph.  The representation
@@ -210,20 +114,7 @@ public class Graph<V>
      *
      * @return the string representation of the graph
      */
-    public String toString()
-    {
-        String toReturn = "";
-        Iterable<V> vertices = getVertices();
-        for(V vertex: vertices) {
-            toReturn += vertex.toString() + ":";
-            Iterable<V> values = adjacentTo(vertex);
-            for (V value: values) {
-                toReturn += " " + value.toString();
-            }
-            toReturn += "\n";
-        }
-        return toReturn;
-    }
+    String toString();
 
     /**
      * Confirms whether or not two graphs share exactly
@@ -232,32 +123,6 @@ public class Graph<V>
      * @param other the object to compare with
      * @return true, if the graphs are equal. If not, false.
      */
-    public boolean equals(Object other)
-    {
-        if (this == other) {
-            return true;
-        }
-        if (!(other instanceof Graph)) {
-            return false;
-        }
-        else {
-            Graph<V> otherGraph = (Graph<V>) other;
-            return info.equals(otherGraph.info);
-        }
-    }
+    boolean equals(Object other);
 
-    // Logan's messy testing for Graph.java :P
-    public static void main(String[] args) {
-      HashMap<String, HashSet<String>> tester = new HashMap<String, HashSet<String>>();
-      HashSet<String> temp = new HashSet<String>();
-      temp.add("a");
-      tester.put("A", temp);
-      System.out.println(tester);
-      System.out.println(tester.values());
-      HashSet<String> temp2 = new HashSet<String>();
-        temp2.add("b");
-        tester.put("A", temp2);
-        System.out.println(tester.values());
-        System.out.println(tester.values().size());
-    }
 }

@@ -1,5 +1,17 @@
 package edu.union.adt.graph;
 
+/**
+ * A collection of classes that recognizes Graph APIs.
+ * Graph APIs are those which establishe directed connections
+ * between parameterized objects, often using language such
+ * as edges and vertices.
+ *
+ * Student: Logan Walker
+ *
+ * I affirm that I have carried out the attached academic endeavors with full academic honesty,
+ * in accordance with the Union College Honor Code and the course syllabus.
+ *
+ */
 public interface Graph<V> {
 
     /**

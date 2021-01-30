@@ -128,13 +128,6 @@ public interface Graph<V> {
      */
     String toString();
 
-    /**
-     * Confirms whether or not two graphs share exactly
-     * the same vertices and corresponding edges.
-     *
-     * @param other the object to compare with
-     * @return true, if the graphs are equal. If not, false.
-     */
-    boolean equals(Object other);
+
 
 }

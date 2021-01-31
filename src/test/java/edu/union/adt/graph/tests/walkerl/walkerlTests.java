@@ -24,4 +24,16 @@ public class walkerlTests {
         tester2 = GraphFactory.<String>createGraph();
     }
 
+    @Test
+    public void removeEdgeFromNoEdges() {
+        String from = "Hello!";
+        String to = "Goodbye";
+        tester1.removeEdge(from, to);
+        assertEquals("removing an edge from an empty graph changes nothing",
+                tester1.numEdges(), 0);
+        tester1.addEdge(from, to);
+        tester1.removeEdge(to,from);
+        assertEquals("removing the backwards form of an edge does not remove the actual edge",
+                tester1.numEdges(), 1);
+    }
 }

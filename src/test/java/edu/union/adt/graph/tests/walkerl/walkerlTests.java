@@ -95,4 +95,17 @@ public class walkerlTests {
       assertFalse("removing the source vertex of an edge should"
                 + "remove the edge", tester1.hasEdge(four, five));
     }
+
+    @Test
+    public void hasPath() {
+      String first = "Logan";
+      String middle = "James";
+      String last = "Walker";
+      tester1.addEdge(first, middle);
+      tester1.addEdge(middle, last);
+      assertTrue("a graph has a path if it is directly connected "
+                + "by a single edge", tester1.hasPath(first, middle));
+      assertTrue("a graph has a path even if it is connected "
+                + "through multiple edges", tester1.hasPath(first, last));
+    }
 }

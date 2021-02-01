@@ -68,4 +68,31 @@ public class walkerlTests {
       assertFalse("adding an edge should make the graph not empty",
                 tester2.isEmpty());
     }
+
+    @Test
+    public void removeVertex() {
+      String one = "one";
+      String two = "two";
+      String three = "three";
+      String four = "four";
+      String five = "five";
+      tester1.addVertex(one);
+      tester1.removeVertex(one);
+      assertEquals("removing a vertex should reduce numVertices by one",
+                tester1.numVertices(), 0);
+      assertFalse("removing a vertex should remove the vertex",
+                tester1.contains(one));
+      tester1.addEdge(two, three);
+      tester1.removeVertex(three);
+      assertEquals("removing the destination vertex of an edge should reduce"
+                + " numEdges by one", tester1.numEdges(), 0);
+      assertFalse("removing the destination vertex of an edge should"
+                + "remove the edge", tester1.hasEdge(two, three));
+      tester1.addEdge(four, five);
+      tester1.removeVertex(four);
+      assertEquals("removing the source vertex of an edge should reduce"
+                + " numEdges by one", tester1.numEdges(), 0);
+      assertFalse("removing the source vertex of an edge should"
+                + "remove the edge", tester1.hasEdge(four, five));
+    }
 }

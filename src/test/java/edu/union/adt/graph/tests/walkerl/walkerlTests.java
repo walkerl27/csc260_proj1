@@ -35,6 +35,8 @@ public class walkerlTests {
         tester1.removeEdge(to,from);
         assertEquals("removing the backwards form of an edge does not remove the actual edge",
                 tester1.numEdges(), 1);
+        assertEquals("an unsuccessful edge removal shouldn't affect numVertices",
+                tester1.numVertices(), 2);
     }
 
     @Test

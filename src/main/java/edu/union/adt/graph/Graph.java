@@ -17,12 +17,12 @@ public interface Graph<V> {
     /**
      * @return the number of vertices in the graph.
      */
-    int numVertices();
+    public int numVertices();
 
     /**
      * @return the number of edges in the graph.
      */
-    int numEdges();
+    public int numEdges();
 
     /**
      * Gets the number of vertices connected by edges from a given
@@ -32,7 +32,7 @@ public interface Graph<V> {
      * @param vertex the vertex whose degree we want.
      * @return the degree of vertex 'vertex'
      */
-    int degree(V vertex);
+    public int degree(V vertex);
 
     /**
      * Adds a directed edge between two vertices.  If there is already an edge
@@ -43,7 +43,7 @@ public interface Graph<V> {
      * @param from the source vertex for the added edge
      * @param to the destination vertex for the added edge
      */
-    void addEdge(V from, V to);
+    public void addEdge(V from, V to);
 
     /**
      * Adds a vertex to the graph.  If the vertex already exists in
@@ -52,13 +52,13 @@ public interface Graph<V> {
      *
      * @param vertex the vertex to add
      */
-    void addVertex(V vertex);
+    public void addVertex(V vertex);
 
     /**
      * @return the an iterable collection for the set of vertices of
      * the graph.
      */
-    Iterable<V> getVertices();
+    public Iterable<V> getVertices();
 
     /**
      * Gets the vertices adjacent to a given vertex.  A vertex y is
@@ -73,7 +73,7 @@ public interface Graph<V> {
      * vertex.  If 'from' is not a vertex in the graph, returns an
      * empty iterator.
      */
-    Iterable<V> adjacentTo(V from);
+    public Iterable<V> adjacentTo(V from);
 
     /**
      * Tells whether or not a vertex is in the graph.
@@ -81,7 +81,7 @@ public interface Graph<V> {
      * @param vertex a vertex
      * @return true iff 'vertex' is a vertex in the graph.
      */
-    boolean contains(V vertex);
+    public boolean contains(V vertex);
 
     /**
      * Tells whether an edge exists in the graph.
@@ -94,7 +94,7 @@ public interface Graph<V> {
      * vertices are not vertices in the graph, then there is no edge
      * between them.
      */
-    boolean hasEdge(V from, V to);
+    public boolean hasEdge(V from, V to);
 
     /**
      * Gives a string representation of the graph.  The representation
@@ -126,7 +126,7 @@ public interface Graph<V> {
      *
      * @return the string representation of the graph
      */
-    String toString();
+    public String toString();
 
 
     /**

@@ -56,4 +56,16 @@ public class walkerlTests {
       assertTrue("removing the edge should NOT remove the destination vertex",
                 tester1.contains(to));
     }
+
+    @Test
+    public void isEmpty() {
+      assertTrue("a brand new graph should be empty", tester1.isEmpty());
+      assertTrue("a brand new graph should be empty", tester2.isEmpty());
+      tester1.addVertex("Hello!");
+      assertFalse("adding a vertex should make the graph not empty",
+                tester1.isEmpty());
+      tester2.addEdge("Hello!", "Goodbye");
+      assertFalse("adding an edge should make the graph not empty",
+                tester2.isEmpty());
+    }
 }

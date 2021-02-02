@@ -6,6 +6,8 @@ import static org.junit.Assert.assertFalse;
 
 import edu.union.adt.graph.Graph;
 import edu.union.adt.graph.GraphFactory;
+import java.util.Iterator;
+
 import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.Before;
@@ -196,6 +198,7 @@ public class walkerlTests {
       tester1.addEdge(first, middle);
       tester1.addEdge(middle, last);
       tester1.addEdge(last, afterLast);
+
       assertEquals("if a path does not exist, Integer.MAX_VALUE is returned",
                 tester1.pathLength(afterLast, last), Integer.MAX_VALUE);
       assertEquals("if the source vertex is not in the graph, "
@@ -208,4 +211,30 @@ public class walkerlTests {
                 + " same but the vertex is not in the graph, Integer.MAX_VALUE is returned",
                 tester1.pathLength(absent, absent), Integer.MAX_VALUE);
     }
+
+    @Test
+    public void smallestPathOfPossible() {
+      String beforeFirst = "Mr.";
+      String first = "Logan";
+      String middle = "James";
+      String last = "Walker";
+      String afterLast = "the First";
+      String absent = "Not in Graph";
+      tester1.addEdge(beforeFirst, first);
+      tester1.addEdge(first, middle);
+      tester1.addEdge(first, afterLast);
+      tester1.addEdge(middle, last);
+      tester1.addEdge(last, afterLast);
+
+      Iterable<String> smallPath = tester1.getPath(beforeFirst, afterLast);
+      Iterator<String> tinyPath = smallPath.iterator();
+      int lengthOfTinyPath = 0;
+      while(tinyPath.hasNext()) {
+        tinyPath.next();
+        lengthOfTinyPath++;
+      }
+      assertEquals("the shortest should be the path with a shortcut",
+                lengthOfTinyPath, 2);
+    }
+
 }

@@ -137,7 +137,7 @@ public class walkerlTests {
     }
 
     @Test
-    public void hasPath() {
+    public void pathsFromEdges() {
       String first = "Logan";
       String middle = "James";
       String last = "Walker";
@@ -147,5 +147,9 @@ public class walkerlTests {
                 + "by a single edge", tester1.hasPath(first, middle));
       assertTrue("a graph has a path even if it is connected "
                 + "through multiple edges", tester1.hasPath(first, last));
+      assertFalse("a graph does not have the backwards path of an inserted path",
+                tester1.hasPath(last, first));
+      assertTrue("a path is naturally created within a single vertex",
+                tester1.hasPath(middle, middle));
     }
 }

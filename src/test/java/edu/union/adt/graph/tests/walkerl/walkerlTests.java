@@ -70,30 +70,70 @@ public class walkerlTests {
     }
 
     @Test
-    public void removeVertex() {
+    public void removingBasicVertices() {
       String one = "one";
       String two = "two";
-      String three = "three";
-      String four = "four";
-      String five = "five";
       tester1.addVertex(one);
       tester1.removeVertex(one);
       assertEquals("removing a vertex should reduce numVertices by one",
                 tester1.numVertices(), 0);
-      assertFalse("removing a vertex should remove the vertex",
+      assertFalse("removing a vertex should successfully remove the vertex",
                 tester1.contains(one));
-      tester1.addEdge(two, three);
-      tester1.removeVertex(three);
+
+      tester1.removeVertex(two);
+      assertEquals("removing a non-existing vertex on an empty graph "
+                + "should not affect numVertices", tester1.numVertices(), 0);
+      assertFalse("removing a non-existing vertex on an empty graph "
+                + "should not add the vertex to the graph", tester1.contains(two));
+
+      tester2.addVertex(one);
+      tester2.removeVertex(two);
+      assertEquals("removing a non-existing vertex on a non-empty graph "
+                + "should not affect numVertices", tester2.numVertices(), 1);
+      assertEquals("removing a non-existing vertex on a non-empty graph "
+                + "should not add the vertex to the graph", tester2.contains(two));
+    }
+
+    @Test
+    public void removingVerticesFromEdges() {
+      String one = "one";
+      String two = "two";
+      String three = "three";
+      String four = "four";
+      tester1.addEdge(one, two);
+      tester1.removeVertex(two);
       assertEquals("removing the destination vertex of an edge should reduce"
                 + " numEdges by one", tester1.numEdges(), 0);
-      assertFalse("removing the destination vertex of an edge should"
-                + "remove the edge", tester1.hasEdge(two, three));
-      tester1.addEdge(four, five);
-      tester1.removeVertex(four);
+      assertFalse("removing the destination vertex of an edge should "
+                + "remove the edge", tester1.hasEdge(one, two));
+
+      tester1.addEdge(three, four);
+      tester1.removeVertex(three);
       assertEquals("removing the source vertex of an edge should reduce"
                 + " numEdges by one", tester1.numEdges(), 0);
       assertFalse("removing the source vertex of an edge should"
-                + "remove the edge", tester1.hasEdge(four, five));
+                + "remove the edge", tester1.hasEdge(three, four));
+
+      tester2.addEdge(one, two);
+      tester2.addEdge(two, three);
+      tester2.removeVertex(two);
+      assertEquals("removing a vertex that is both the source of an "
+                + "edge and the destination of another edge should remove"
+                + "remove the destination edge", tester2.numEdges(), 0);
+      assertFalse("removing a vertex that is both the source of an "
+                + "edge and the destination of another edge should remove"
+                + "remove the destination edge", tester2.hasEdge(one, two));
+      assertFalse("removing a vertex that is both the source of an "
+                + "edge and the destination of another edge should remove"
+                + "remove the source edge", tester2.hasEdge(two, three));
+
+      tester2.addEdge(four, four);
+      tester2.removeVertex(four);
+      assertEquals("removing a vertex that is both source and the destination"
+                + "of the SAME edge", tester2.numEdges(), 0);
+      assertFalse("removing a vertex that is both source and the destination"
+                + "of the SAME edge", tester2.hasEdge(four, four));
+
     }
 
     @Test

@@ -66,9 +66,16 @@ public class walkerlTests {
       tester1.addVertex(one);
       assertFalse("adding a vertex should make the graph not empty",
                 tester1.isEmpty());
+      tester1.removeVertex(one);
+      assertTrue("removing all vertices of a graph makes it empty again",
+                tester1.isEmpty());
+
       tester2.addEdge(one, two);
       assertFalse("adding an edge should make the graph not empty",
                 tester2.isEmpty());
+      tester2.removeEdge(one, two);
+      assertFalse("removing all edges without removing the vertices means"
+                + "it is still not empty", tester2.isEmpty());
     }
 
     @Test

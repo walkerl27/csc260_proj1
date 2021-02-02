@@ -58,13 +58,15 @@ public class walkerlTests {
     }
 
     @Test
-    public void isEmpty() {
+    public void emptyAndNonemptyGraphs() {
       assertTrue("a brand new graph should be empty", tester1.isEmpty());
       assertTrue("a brand new graph should be empty", tester2.isEmpty());
-      tester1.addVertex("Hello!");
+      String one = "Hello!";
+      String two = "Goodbye!";
+      tester1.addVertex(one);
       assertFalse("adding a vertex should make the graph not empty",
                 tester1.isEmpty());
-      tester2.addEdge("Hello!", "Goodbye");
+      tester2.addEdge(one, two);
       assertFalse("adding an edge should make the graph not empty",
                 tester2.isEmpty());
     }

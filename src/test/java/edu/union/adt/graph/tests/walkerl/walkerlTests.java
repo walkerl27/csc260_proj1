@@ -165,8 +165,33 @@ public class walkerlTests {
       tester1.addEdge(middle, last);
       tester1.addEdge(last, afterLast);
       assertEquals("if a single path exists, gets the only path length possible",
-      tester1.pathLength(beforeFirst, afterLast), 4);
+                tester1.pathLength(beforeFirst, afterLast), 4);
       assertEquals("the source and destination vertex of the path are the same",
-      tester1.pathLength(first, first), 0);
+                tester1.pathLength(first, first), 0);
+    }
+
+    @Test
+    public void findingLengthsOfImpossiblePaths() {
+      String beforeFirst = "Mr.";
+      String first = "Logan";
+      String middle = "James";
+      String last = "Walker";
+      String afterLast = "the First";
+      String absent = "Not in Graph";
+      tester1.addEdge(beforeFirst, first);
+      tester1.addEdge(first, middle);
+      tester1.addEdge(middle, last);
+      tester1.addEdge(last, afterLast);
+      assertEquals("if a path does not exist, Integer.MAX_VALUE is returned",
+                tester1.pathLength(afterLast, last), Integer.MAX_VALUE);
+      assertEquals("if the source vertex is not in the graph, "
+                + "Integer.MAX_VALUE is returned",
+                tester1.pathLength(absent, last), Integer.MAX_VALUE);
+      assertEquals("if the source vertex is not in the graph, "
+                + "Integer.MAX_VALUE is returned",
+                tester1.pathLength(first, absent), Integer.MAX_VALUE);
+      assertEquals("if the source vertex and the destination vertex are the"
+                + " same but the vertex is not in the graph, Integer.MAX_VALUE is returned",
+                tester1.pathLength(absent, absent), Integer.MAX_VALUE);
     }
 }

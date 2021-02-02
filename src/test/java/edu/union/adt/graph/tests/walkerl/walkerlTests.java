@@ -152,4 +152,21 @@ public class walkerlTests {
       assertTrue("a path is naturally created within a single vertex",
                 tester1.hasPath(middle, middle));
     }
+
+    @Test
+    public void findingLengthsOfExistingPaths() {
+      String beforeFirst = "Mr.";
+      String first = "Logan";
+      String middle = "James";
+      String last = "Walker";
+      String afterLast = "the First";
+      tester1.addEdge(beforeFirst, first);
+      tester1.addEdge(first, middle);
+      tester1.addEdge(middle, last);
+      tester1.addEdge(last, afterLast);
+      assertEquals("if a single path exists, gets the only path length possible",
+      tester1.pathLength(beforeFirst, afterLast), 4);
+      assertEquals("the source and destination vertex of the path are the same",
+      tester1.pathLength(first, first), 0);
+    }
 }

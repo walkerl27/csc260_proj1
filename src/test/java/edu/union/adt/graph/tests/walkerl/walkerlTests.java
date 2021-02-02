@@ -168,6 +168,11 @@ public class walkerlTests {
                 tester1.pathLength(beforeFirst, afterLast), 4);
       assertEquals("the source and destination vertex of the path are the same",
                 tester1.pathLength(first, first), 0);
+      tester1.addEdge(first, last);
+      assertEquals("if a shortcut is added, the path length decreases respectively",
+                tester1.pathLength(beforeFirst, afterLast), 3);
+      assertEquals("if a path is just an edge, the path length is one",
+                tester1.pathLength(beforeFirst, first), 1);
     }
 
     @Test

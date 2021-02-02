@@ -219,7 +219,6 @@ public class walkerlTests {
       String middle = "James";
       String last = "Walker";
       String afterLast = "the First";
-      String absent = "Not in Graph";
       tester1.addEdge(beforeFirst, first);
       tester1.addEdge(first, middle);
       tester1.addEdge(first, afterLast);
@@ -235,6 +234,36 @@ public class walkerlTests {
       }
       assertEquals("the shortest should be the path with a shortcut",
                 lengthOfTinyPath, 2);
+    }
+
+    @Test
+    public void gettingImpossiblePaths() {
+      String first = "Logan";
+      String middle = "James";
+      String last = "Walker";
+      String absent = "Not in Graph";
+      tester1.addEdge(first, middle);
+      tester1.addEdge(middle, last);
+
+      Iterable<String> smallPath1 = tester1.getPath(absent, last);
+      Iterator<String> tinyPath1 = smallPath1.iterator();
+      int lengthOfTinyPath1 = 0;
+      while(tinyPath1.hasNext()) {
+        tinyPath1.next();
+        lengthOfTinyPath1++;
+      }
+      assertEquals("a path with a non-existing source vertex will"
+      + "result in no path", lengthOfTinyPath1, 0);
+
+      Iterable<String> smallPath2 = tester1.getPath(first, absent);
+      Iterator<String> tinyPath2 = smallPath2.iterator();
+      int lengthOfTinyPath2 = 0;
+      while(tinyPath2.hasNext()) {
+        tinyPath2.next();
+        lengthOfTinyPath2++;
+      }
+      assertEquals("a path with a non-existing destination vertex will"
+      + "result in no path", lengthOfTinyPath2, 0);
     }
 
 }

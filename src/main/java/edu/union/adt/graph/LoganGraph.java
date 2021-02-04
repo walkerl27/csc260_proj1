@@ -253,7 +253,12 @@ public class LoganGraph<V> implements Graph<V>
      * no vertices and no edges.
      */
     public boolean isEmpty() {
-        return false;
+        if ((this.numVertices() == 0) && (this.numEdges() == 0)) {
+          return true;
+        }
+        else {
+          return false;
+        }
     }
 
 

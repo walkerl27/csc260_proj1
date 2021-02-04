@@ -296,7 +296,14 @@ public class LoganGraph<V> implements Graph<V>
      * @param to the target vertex for the edge
      */
     public void removeEdge(V from, V to) {
-
+      if (this.contains(from)) {
+        if (this.contains(to)) {
+          if (this.hasEdge(from, to)) {
+            HashSet<V> values = info.get(from);
+            values.remove(to);
+          }
+        }
+      }
     }
 
 

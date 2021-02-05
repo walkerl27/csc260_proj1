@@ -3,6 +3,7 @@ package edu.union.adt.graph;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Iterator;
 
 /**
  * A graph that establishes connections (edges) between objects of
@@ -35,7 +36,7 @@ public class LoganGraph<V> implements Graph<V>
      * are contained within a HashSet. Each key must be different
      * and the values for a given key contains no duplicates, meaning
      * different keys may contain the same value but a single key cannot
-     * possess two values that are identical. 
+     * possess two values that are identical.
      */
     private HashMap<V, HashSet<V>> contents;
 
@@ -286,7 +287,23 @@ public class LoganGraph<V> implements Graph<V>
      * @param toRemove the vertex to remove.
      */
     public void removeVertex(V toRemove) {
-
+        if (this.contains(toRemove)) {
+          Iterable<V> toRemoveAdjacencies = adjacentTo(toRemove);
+          Iterator<V> toRemoveIterator = toRemoveAdjacencies.iterator();
+          while(toRemoveIterator.hasNext()) {
+            V destination = toRemoveIterator.next();
+            removeEdge(toRemove, destination);
+          }
+          Iterable<V> verticesList = getVertices();
+          Iterator<V> verticesIterator = verticesList.iterator();
+          while(verticesIterator.hasNext()) {
+            V currentVertex = verticesIterator.next();
+            if(this.hasEdge(currentVertex, toRemove)) {
+              removeEdge(currentVertex, toRemove);
+            }
+          }
+          contents.remove(toRemove);
+        }
     }
 
 

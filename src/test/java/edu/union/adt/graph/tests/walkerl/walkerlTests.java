@@ -101,7 +101,7 @@ public class walkerlTests {
       tester2.removeVertex(two);
       assertEquals("removing a non-existing vertex on a non-empty graph "
                 + "should not affect numVertices", tester2.numVertices(), 1);
-      assertEquals("removing a non-existing vertex on a non-empty graph "
+      assertFalse("removing a non-existing vertex on a non-empty graph "
                 + "should not add the vertex to the graph", tester2.contains(two));
     }
 

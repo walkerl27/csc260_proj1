@@ -18,7 +18,7 @@ import java.util.Set;
  * vertices.
  *
  * @author Aaron G. Cass
- * @version 1.1
+ * @version 2.0
  *
  * Student: Logan Walker
  *
@@ -29,14 +29,22 @@ import java.util.Set;
 public class LoganGraph<V> implements Graph<V>
 {
 
-    private HashMap<V, HashSet<V>> info;
+    /**
+     * contents: contains both the graph keys and the values for each key.
+     * The keys are simply the inputted object value while the values
+     * are contained within a HashSet. Each key must be different
+     * and the values for a given key contains no duplicates, meaning
+     * different keys may contain the same value but a single key cannot
+     * possess two values that are identical. 
+     */
+    private HashMap<V, HashSet<V>> contents;
 
     /**
      * Create an empty graph.
      */
     public LoganGraph()
     {
-      info = new HashMap<V, HashSet<V>>();
+      contents = new HashMap<V, HashSet<V>>();
     }
 
     /**
@@ -44,7 +52,7 @@ public class LoganGraph<V> implements Graph<V>
      */
     public int numVertices()
     {
-        return info.size();
+        return contents.size();
     }
 
     /**
@@ -52,7 +60,7 @@ public class LoganGraph<V> implements Graph<V>
      */
     public int numEdges()
     {
-      Set<V> keys = info.keySet();
+      Set<V> keys = contents.keySet();
       int count = 0;
       for(V vertex: keys){
           count += degree(vertex);
@@ -70,12 +78,12 @@ public class LoganGraph<V> implements Graph<V>
      */
     public int degree(V vertex)
     {
-        Set<V> vertices = info.keySet();
+        Set<V> vertices = contents.keySet();
         if (!vertices.contains(vertex)) {
           throw new RuntimeException("vertex not in graph");
         }
 
-        HashSet<V> value = info.get(vertex);
+        HashSet<V> value = contents.get(vertex);
         return value.size();
     }
 
@@ -96,7 +104,7 @@ public class LoganGraph<V> implements Graph<V>
         if (!this.contains(to)) {
               addVertex(to);
         }
-        HashSet<V> values = info.get(from);
+        HashSet<V> values = contents.get(from);
         values.add(to);
     }
 
@@ -109,8 +117,8 @@ public class LoganGraph<V> implements Graph<V>
      */
     public void addVertex(V vertex)
     {
-        if (!info.containsKey(vertex)) {
-              info.put(vertex, new HashSet<V>());
+        if (!contents.containsKey(vertex)) {
+              contents.put(vertex, new HashSet<V>());
         }
     }
 
@@ -120,7 +128,7 @@ public class LoganGraph<V> implements Graph<V>
      */
     public Iterable<V> getVertices()
     {
-        return info.keySet();
+        return contents.keySet();
     }
 
     /**
@@ -138,8 +146,8 @@ public class LoganGraph<V> implements Graph<V>
      */
     public Iterable<V> adjacentTo(V from)
     {
-        if (info.containsKey(from)) {
-            return info.get(from);
+        if (contents.containsKey(from)) {
+            return contents.get(from);
         }
         else {
             return new HashSet<V>();
@@ -154,7 +162,7 @@ public class LoganGraph<V> implements Graph<V>
      */
     public boolean contains(V vertex)
     {
-        return info.containsKey(vertex);
+        return contents.containsKey(vertex);
     }
 
     /**
@@ -176,7 +184,7 @@ public class LoganGraph<V> implements Graph<V>
         if (!this.contains(to)) {
             return false;
         }
-        HashSet<V> values = info.get(from);
+        HashSet<V> values = contents.get(from);
         return values.contains(to);
     }
 
@@ -242,7 +250,7 @@ public class LoganGraph<V> implements Graph<V>
         }
         else {
             LoganGraph<V> otherLoganGraph = (LoganGraph<V>) other;
-            return info.equals(otherLoganGraph.info);
+            return contents.equals(otherLoganGraph.contents);
         }
     }
 
@@ -299,7 +307,7 @@ public class LoganGraph<V> implements Graph<V>
       if (this.contains(from)) {
         if (this.contains(to)) {
           if (this.hasEdge(from, to)) {
-            HashSet<V> values = info.get(from);
+            HashSet<V> values = contents.get(from);
             values.remove(to);
           }
         }

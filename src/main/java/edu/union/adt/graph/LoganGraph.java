@@ -39,6 +39,7 @@ public class LoganGraph<V> implements Graph<V>
      * possess two values that are identical.
      */
     private HashMap<V, HashSet<V>> contents;
+    private int numOfEdges;
 
     /**
      * Create an empty graph.
@@ -46,6 +47,7 @@ public class LoganGraph<V> implements Graph<V>
     public LoganGraph()
     {
       contents = new HashMap<V, HashSet<V>>();
+      numOfEdges = 0;
     }
 
     /**
@@ -61,12 +63,15 @@ public class LoganGraph<V> implements Graph<V>
      */
     public int numEdges()
     {
+      /*
       Set<V> keys = contents.keySet();
       int count = 0;
       for(V vertex: keys){
           count += degree(vertex);
       }
       return count;
+      */
+      return numOfEdges;
     }
 
     /**
@@ -107,6 +112,7 @@ public class LoganGraph<V> implements Graph<V>
         }
         HashSet<V> values = contents.get(from);
         values.add(to);
+        numOfEdges++;
     }
 
     /**
@@ -179,6 +185,9 @@ public class LoganGraph<V> implements Graph<V>
      */
     public boolean hasEdge(V from, V to)
     {
+        if (numOfEdges == 0) {
+            return false;
+        }
         if (!this.contains(from)) {
             return false;
         }
@@ -326,6 +335,7 @@ public class LoganGraph<V> implements Graph<V>
           if (this.hasEdge(from, to)) {
             HashSet<V> values = contents.get(from);
             values.remove(to);
+            numOfEdges--;
           }
         }
       }

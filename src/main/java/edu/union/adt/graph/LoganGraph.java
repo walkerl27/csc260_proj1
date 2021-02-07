@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * A graph that establishes connections (edges) between objects of
@@ -414,7 +415,54 @@ public class LoganGraph<V> implements Graph<V>
      * returns an empty Iterable collection of vertices.
      */
     public Iterable<V> getPath(V from, V to) {
-        return null;
+        if (!this.contains(from)) {
+          return new ArrayList<V>();
+        }
+        if (!this.contains(to)) {
+          return new ArrayList<V>();
+        }
+        ArrayList<V> visited = new ArrayList<V>();
+        ArrayList<ArrayList<V>> listOfLists = new ArrayList<ArrayList<V>>();
+        listOfLists = getPath(from, to, listOfLists, visited);
+        if (listOfLists.size() > 0) {
+            ArrayList<V> shortestList = listOfLists.get(0);
+            for(int i = 0; i < listOfLists.size(); i++) {
+                if(listOfLists.get(i).size() < shortestList.size()) {
+                    shortestList = listOfLists.get(i);
+                }
+            }
+            return shortestList;
+        }
+        else {
+            return new ArrayList<V>();
+        }
+    }
+
+    private ArrayList<ArrayList<V>> getPath(V from, V to, ArrayList<ArrayList<V>> listOfLists, ArrayList<V> visited) {
+        if(from == to) {
+            //ArrayList<V> toAdd = new ArrayList<V>();
+
+            visited.add(from);
+            listOfLists.add(visited);
+            return listOfLists;
+        }
+        if(from.equals(to)) {
+            //ArrayList<V> toAdd = new ArrayList<V>();
+            visited.add(from);
+            listOfLists.add(visited);
+            return listOfLists;
+        }
+        Iterable<V> adjacencys = adjacentTo(from);
+        Iterator<V> neighbors = adjacencys.iterator();
+        while (neighbors.hasNext()) {
+            V neighbor = neighbors.next();
+            if (!visited.contains(neighbor)){
+                ArrayList<V> newlyVisited = (ArrayList<V>) visited.clone();
+                newlyVisited.add(from);
+                listOfLists = getPath(neighbor, to, listOfLists, newlyVisited);
+            }
+        }
+        return listOfLists;
     }
 
     // Logan's messy testing for LoganGraph.java :P

@@ -37,6 +37,8 @@ public class LoganGraph<V> implements Graph<V>
      * and the values for a given key contains no duplicates, meaning
      * different keys may contain the same value but a single key cannot
      * possess two values that are identical.
+     * numOfEdges: keeps track of the amount of edges within the contents
+     * of the graph.
      */
     private HashMap<V, HashSet<V>> contents;
     private int numOfEdges;
@@ -63,14 +65,6 @@ public class LoganGraph<V> implements Graph<V>
      */
     public int numEdges()
     {
-      /*
-      Set<V> keys = contents.keySet();
-      int count = 0;
-      for(V vertex: keys){
-          count += degree(vertex);
-      }
-      return count;
-      */
       return numOfEdges;
     }
 
@@ -361,7 +355,14 @@ public class LoganGraph<V> implements Graph<V>
      * @return true iff there is a path from 'from' to 'to' in the graph.
      */
     public boolean hasPath(V from, V to) {
-        return false;
+        Iterable<V> path = getPath(from, to);
+        Iterator<V> thePath = path.iterator();
+        if (thePath.hasNext()) {
+          return true;
+        }
+        else {
+          return false;
+        }
     }
 
 
@@ -382,7 +383,14 @@ public class LoganGraph<V> implements Graph<V>
      * the graph.  If there is no path, returns Integer.MAX_VALUE
      */
     public int pathLength(V from, V to) {
-        return 0;
+        Iterable<V> path = getPath(from, to);
+        Iterator<V> thePath = path.iterator();
+        int count = 0;
+        while (thePath.hasNext()) {
+          thePath.next();
+          count++;
+        }
+        return count;
     }
 
 

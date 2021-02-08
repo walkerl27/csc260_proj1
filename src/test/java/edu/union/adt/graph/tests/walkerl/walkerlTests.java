@@ -17,24 +17,26 @@ import org.junit.runners.JUnit4;
 
 public class walkerlTests {
 
-    private Graph<String> tester1;
+    private Graph<Integer> tester1;
     private Graph<String> tester2;
+    private Graph<String> tester3;
 
     @Before
     public void setUp() {
-        tester1 = GraphFactory.<String>createGraph();
+        tester1 = GraphFactory.<Integer>createGraph();
         tester2 = GraphFactory.<String>createGraph();
+        tester3 = GraphFactory.<String>createGraph();
     }
 
     @Test
     public void removeEdgeFromNoEdges() {
-        String from = "Hello!";
-        String to = "Goodbye!";
+        Integer from = 78;
+        Integer to = 999;
         tester1.removeEdge(from, to);
         assertEquals("removing an edge from an empty graph changes nothing",
                 tester1.numEdges(), 0);
         tester1.addEdge(from, to);
-        tester1.removeEdge(to,from);
+        tester1.removeEdge(to, from);
         assertEquals("removing the backwards form of an edge does not remove the actual edge",
                 tester1.numEdges(), 1);
         assertEquals("an unsuccessful edge removal shouldn't affect numVertices",
@@ -43,8 +45,8 @@ public class walkerlTests {
 
     @Test
     public void removeEdgeSuccessful() {
-      String from = "Hello!";
-      String to = "Goodbye!";
+      Integer from = 78;
+      Integer to = 999;
       tester1.addEdge(from, to);
       assertEquals("confirming the edge was successfully added",
                 tester1.numEdges(), 1);
@@ -63,8 +65,8 @@ public class walkerlTests {
     public void emptyAndNonemptyGraphs() {
       assertTrue("a brand new graph should be empty", tester1.isEmpty());
       assertTrue("a brand new graph should be empty", tester2.isEmpty());
-      String one = "Hello!";
-      String two = "Goodbye!";
+      Integer one = 78;
+      //Integer two = 999;
       tester1.addVertex(one);
       assertFalse("adding a vertex should make the graph not empty",
                 tester1.isEmpty());
@@ -72,18 +74,20 @@ public class walkerlTests {
       assertTrue("removing all vertices of a graph makes it empty again",
                 tester1.isEmpty());
 
-      tester2.addEdge(one, two);
+      String greetings = "Hello!";
+      String partings = "Goodbye!";
+      tester2.addEdge(greetings, partings);
       assertFalse("adding an edge should make the graph not empty",
                 tester2.isEmpty());
-      tester2.removeEdge(one, two);
+      tester2.removeEdge(greetings, partings);
       assertFalse("removing all edges without removing the vertices means"
-                + "it is still not empty", tester2.isEmpty());
+                + "the graph is still not empty", tester2.isEmpty());
     }
 
     @Test
     public void removingBasicVertices() {
-      String one = "one";
-      String two = "two";
+      Integer one = 123;
+      Integer two = 654;
       tester1.addVertex(one);
       tester1.removeVertex(one);
       assertEquals("removing a vertex should reduce numVertices by one",
@@ -97,20 +101,22 @@ public class walkerlTests {
       assertFalse("removing a non-existing vertex on an empty graph "
                 + "should not add the vertex to the graph", tester1.contains(two));
 
-      tester2.addVertex(one);
-      tester2.removeVertex(two);
+      String three = "Hello!";
+      String four = "Goodbye!";
+      tester2.addVertex(three);
+      tester2.removeVertex(four);
       assertEquals("removing a non-existing vertex on a non-empty graph "
                 + "should not affect numVertices", tester2.numVertices(), 1);
       assertFalse("removing a non-existing vertex on a non-empty graph "
-                + "should not add the vertex to the graph", tester2.contains(two));
+                + "should not add the vertex to the graph", tester2.contains(four));
     }
 
     @Test
     public void removingVerticesFromEdges() {
-      String one = "one";
-      String two = "two";
-      String three = "three";
-      String four = "four";
+      Integer one = 100;
+      Integer two = 202;
+      Integer three = 330;
+      Integer four = 444;
       tester1.addEdge(one, two);
       tester1.removeVertex(two);
       assertEquals("removing the destination vertex of an edge should reduce"
@@ -125,43 +131,61 @@ public class walkerlTests {
       assertFalse("removing the source vertex of an edge should"
                 + "remove the edge", tester1.hasEdge(three, four));
 
-      tester2.addEdge(one, two);
-      tester2.addEdge(two, three);
-      tester2.removeVertex(two);
+      String five = "five";
+      String six = "six";
+      String seven = "seven";
+      String eight = "eight";
+      tester2.addEdge(five, six);
+      tester2.addEdge(six, seven);
+      tester2.removeVertex(six);
       assertEquals("removing a vertex that is both the source of an "
                 + "edge and the destination of another edge should remove"
                 + "remove the destination edge", tester2.numEdges(), 0);
       assertFalse("removing a vertex that is both the source of an "
                 + "edge and the destination of another edge should remove"
-                + "remove the destination edge", tester2.hasEdge(one, two));
+                + "remove the destination edge", tester2.hasEdge(five, six));
       assertFalse("removing a vertex that is both the source of an "
                 + "edge and the destination of another edge should remove"
-                + "remove the source edge", tester2.hasEdge(two, three));
+                + "remove the source edge", tester2.hasEdge(six, seven));
 
-      tester2.addEdge(four, four);
-      tester2.removeVertex(four);
+      tester2.addEdge(eight, eight);
+      tester2.removeVertex(eight);
       assertEquals("removing a vertex that is both source and the destination"
                 + "of the SAME edge", tester2.numEdges(), 0);
       assertFalse("removing a vertex that is both source and the destination"
-                + "of the SAME edge", tester2.hasEdge(four, four));
+                + "of the SAME edge", tester2.hasEdge(eight, eight));
 
     }
 
     @Test
     public void pathsFromEdges() {
+      Integer one = 1;
+      Integer two = 22;
+      Integer three = 333;
+      tester1.addEdge(one, two);
+      tester1.addEdge(two, three);
+      assertTrue("a graph has a path if it is directly connected "
+                + "by a single edge - Integer", tester1.hasPath(one, two));
+      assertTrue("a graph has a path even if it is connected "
+                + "through multiple edges - Integer", tester1.hasPath(one, three));
+      assertFalse("a graph does not have the backwards path of an inserted path - Integer",
+                tester1.hasPath(three, one));
+      assertTrue("a path is naturally created within a single vertex - Integer",
+                tester1.hasPath(two, two));
+
       String first = "Logan";
       String middle = "James";
       String last = "Walker";
-      tester1.addEdge(first, middle);
-      tester1.addEdge(middle, last);
+      tester2.addEdge(first, middle);
+      tester2.addEdge(middle, last);
       assertTrue("a graph has a path if it is directly connected "
-                + "by a single edge", tester1.hasPath(first, middle));
+                + "by a single edge - String", tester2.hasPath(first, middle));
       assertTrue("a graph has a path even if it is connected "
-                + "through multiple edges", tester1.hasPath(first, last));
-      assertFalse("a graph does not have the backwards path of an inserted path",
-                tester1.hasPath(last, first));
-      assertTrue("a path is naturally created within a single vertex",
-                tester1.hasPath(middle, middle));
+                + "through multiple edges - String", tester2.hasPath(first, last));
+      assertFalse("a graph does not have the backwards path of an inserted path - String",
+                tester2.hasPath(last, first));
+      assertTrue("a path is naturally created within a single vertex - String",
+                tester2.hasPath(middle, middle));
     }
 
     @Test
@@ -171,19 +195,20 @@ public class walkerlTests {
       String middle = "James";
       String last = "Walker";
       String afterLast = "the First";
-      tester1.addEdge(beforeFirst, first);
-      tester1.addEdge(first, middle);
-      tester1.addEdge(middle, last);
-      tester1.addEdge(last, afterLast);
+      tester2.addEdge(beforeFirst, first);
+      tester2.addEdge(first, middle);
+      tester2.addEdge(middle, last);
+      tester2.addEdge(last, afterLast);
       assertEquals("if a single path exists, gets the only path length possible",
-                tester1.pathLength(beforeFirst, afterLast), 4);
+                tester2.pathLength(beforeFirst, afterLast), 4);
       assertEquals("the source and destination vertex of the path are the same",
-                tester1.pathLength(first, first), 0);
-      tester1.addEdge(first, last);
+                tester2.pathLength(first, first), 0);
+
+      tester2.addEdge(first, last);
       assertEquals("if a shortcut is added, the path length decreases respectively",
-                tester1.pathLength(beforeFirst, afterLast), 3);
+                tester2.pathLength(beforeFirst, afterLast), 3);
       assertEquals("if a path is just an edge, the path length is one",
-                tester1.pathLength(beforeFirst, first), 1);
+                tester2.pathLength(beforeFirst, first), 1);
     }
 
     @Test
@@ -194,22 +219,22 @@ public class walkerlTests {
       String last = "Walker";
       String afterLast = "the First";
       String absent = "Not in Graph";
-      tester1.addEdge(beforeFirst, first);
-      tester1.addEdge(first, middle);
-      tester1.addEdge(middle, last);
-      tester1.addEdge(last, afterLast);
+      tester2.addEdge(beforeFirst, first);
+      tester2.addEdge(first, middle);
+      tester2.addEdge(middle, last);
+      tester2.addEdge(last, afterLast);
 
       assertEquals("if a path does not exist, Integer.MAX_VALUE is returned",
-                tester1.pathLength(afterLast, last), Integer.MAX_VALUE);
+                tester2.pathLength(afterLast, last), Integer.MAX_VALUE);
       assertEquals("if the source vertex is not in the graph, "
                 + "Integer.MAX_VALUE is returned",
-                tester1.pathLength(absent, last), Integer.MAX_VALUE);
+                tester2.pathLength(absent, last), Integer.MAX_VALUE);
       assertEquals("if the source vertex is not in the graph, "
                 + "Integer.MAX_VALUE is returned",
-                tester1.pathLength(first, absent), Integer.MAX_VALUE);
+                tester2.pathLength(first, absent), Integer.MAX_VALUE);
       assertEquals("if the source vertex and the destination vertex are the"
                 + " same but the vertex is not in the graph, Integer.MAX_VALUE is returned",
-                tester1.pathLength(absent, absent), Integer.MAX_VALUE);
+                tester2.pathLength(absent, absent), Integer.MAX_VALUE);
     }
 
     @Test
@@ -219,13 +244,13 @@ public class walkerlTests {
       String middle = "James";
       String last = "Walker";
       String afterLast = "the First";
-      tester1.addEdge(beforeFirst, first);
-      tester1.addEdge(first, middle);
-      tester1.addEdge(first, afterLast);
-      tester1.addEdge(middle, last);
-      tester1.addEdge(last, afterLast);
+      tester2.addEdge(beforeFirst, first);
+      tester2.addEdge(first, middle);
+      tester2.addEdge(first, afterLast);
+      tester2.addEdge(middle, last);
+      tester2.addEdge(last, afterLast);
 
-      Iterable<String> smallPath = tester1.getPath(beforeFirst, afterLast);
+      Iterable<String> smallPath = tester2.getPath(beforeFirst, afterLast);
       Iterator<String> tinyPath = smallPath.iterator();
       int lengthOfTinyPath = 0;
       while(tinyPath.hasNext()) {
@@ -242,10 +267,10 @@ public class walkerlTests {
       String middle = "James";
       String last = "Walker";
       String absent = "Not in Graph";
-      tester1.addEdge(first, middle);
-      tester1.addEdge(middle, last);
+      tester2.addEdge(first, middle);
+      tester2.addEdge(middle, last);
 
-      Iterable<String> smallPath1 = tester1.getPath(absent, last);
+      Iterable<String> smallPath1 = tester2.getPath(absent, last);
       Iterator<String> tinyPath1 = smallPath1.iterator();
       int lengthOfTinyPath1 = 0;
       while(tinyPath1.hasNext()) {
@@ -255,7 +280,7 @@ public class walkerlTests {
       assertEquals("a path with a non-existing source vertex will"
       + "result in no path", lengthOfTinyPath1, 0);
 
-      Iterable<String> smallPath2 = tester1.getPath(first, absent);
+      Iterable<String> smallPath2 = tester2.getPath(first, absent);
       Iterator<String> tinyPath2 = smallPath2.iterator();
       int lengthOfTinyPath2 = 0;
       while(tinyPath2.hasNext()) {

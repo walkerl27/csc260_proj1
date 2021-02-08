@@ -386,12 +386,17 @@ public class LoganGraph<V> implements Graph<V>
     public int pathLength(V from, V to) {
         Iterable<V> path = getPath(from, to);
         Iterator<V> thePath = path.iterator();
-        int count = 0;
+        int count = -1;
         while (thePath.hasNext()) {
           thePath.next();
           count++;
         }
-        return count;
+        if (count < 0) {
+          return Integer.MAX_VALUE;
+        }
+        else {
+          return count;
+        }
     }
 
 

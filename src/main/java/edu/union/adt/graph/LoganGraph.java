@@ -443,16 +443,26 @@ public class LoganGraph<V> implements Graph<V>
         }
     }
 
+    /**
+     * Recursive functionality for getPath(V from, V to)
+     * @param from the source vertex
+     * @param to the destination addVertex
+     * @param listOfLists a container for all the ArrayLists containing
+     * information about the visited vertices for a successful path
+     * @param visited a list of all the previously visited vertices
+     * in this particular path starting at the from vertex and
+     * ending with the to vertex
+     * @return the final container that holds all the ArrayLists containing
+     * information about the visited vertices for each respective successful path
+     */
     private ArrayList<ArrayList<V>> getPath(V from, V to, ArrayList<ArrayList<V>> listOfLists, ArrayList<V> visited) {
         if(from == to) {
-            //ArrayList<V> toAdd = new ArrayList<V>();
-
             visited.add(from);
             listOfLists.add(visited);
             return listOfLists;
         }
+
         if(from.equals(to)) {
-            //ArrayList<V> toAdd = new ArrayList<V>();
             visited.add(from);
             listOfLists.add(visited);
             return listOfLists;

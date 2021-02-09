@@ -66,7 +66,6 @@ public class walkerlTests {
       assertTrue("a brand new graph should be empty", tester1.isEmpty());
       assertTrue("a brand new graph should be empty", tester2.isEmpty());
       Integer one = 78;
-      //Integer two = 999;
       tester1.addVertex(one);
       assertFalse("adding a vertex should make the graph not empty",
                 tester1.isEmpty());
@@ -246,49 +245,36 @@ public class walkerlTests {
       String afterLast = "the First";
       tester2.addEdge(beforeFirst, first);
       tester2.addEdge(first, middle);
+      tester2.addEdge(first, last);
       tester2.addEdge(first, afterLast);
       tester2.addEdge(middle, last);
       tester2.addEdge(last, afterLast);
 
-      Iterable<String> smallPath = tester2.getPath(beforeFirst, afterLast);
-      Iterator<String> tinyPath = smallPath.iterator();
-      int lengthOfTinyPath = 0;
-      while(tinyPath.hasNext()) {
-        tinyPath.next();
-        lengthOfTinyPath++;
-      }
+      tester3.addEdge(beforeFirst, first);
+      tester3.addEdge(first, afterLast);
+
+      Iterable<String> pathFrom2 = tester2.getPath(beforeFirst, afterLast);
+      Iterable<String> pathFrom3 = tester3.getPath(beforeFirst, afterLast);
+
       assertEquals("the shortest should be the path with a shortcut",
-                lengthOfTinyPath, 2);
+                pathFrom2, pathFrom3);
     }
 
     @Test
     public void gettingImpossiblePaths() {
+
       String first = "Logan";
-      String middle = "James";
       String last = "Walker";
       String absent = "Not in Graph";
-      tester2.addEdge(first, middle);
-      tester2.addEdge(middle, last);
+      tester2.addEdge(first, last);
 
-      Iterable<String> smallPath1 = tester2.getPath(absent, last);
-      Iterator<String> tinyPath1 = smallPath1.iterator();
-      int lengthOfTinyPath1 = 0;
-      while(tinyPath1.hasNext()) {
-        tinyPath1.next();
-        lengthOfTinyPath1++;
-      }
+      Iterable<String> impossiblePath1 = tester2.getPath(absent, last);
       assertEquals("a path with a non-existing source vertex will"
-      + "result in no path", lengthOfTinyPath1, 0);
+      + "result in no path", impossiblePath1, GraphFactory.<String>createGraph().getPath(absent, absent));
 
-      Iterable<String> smallPath2 = tester2.getPath(first, absent);
-      Iterator<String> tinyPath2 = smallPath2.iterator();
-      int lengthOfTinyPath2 = 0;
-      while(tinyPath2.hasNext()) {
-        tinyPath2.next();
-        lengthOfTinyPath2++;
-      }
+      Iterable<String> impossiblePath2 = tester2.getPath(first, absent);
       assertEquals("a path with a non-existing destination vertex will"
-      + "result in no path", lengthOfTinyPath2, 0);
+      + "result in no path", impossiblePath2, GraphFactory.<String>createGraph().getPath(absent, absent));
     }
 
 }

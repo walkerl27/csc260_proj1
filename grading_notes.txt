@@ -1,0 +1,10 @@
+:::walkerl::: 100
+
+Git usage: 20
+
+Good.
+
+Test/main code performance: 50
+
+14 test failures found IN your main code
+44 test failures found BY your test code
